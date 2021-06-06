@@ -1,21 +1,69 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from 'react';
+import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';  
+import { createStackNavigator } from 'react-navigation-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createAppContainer } from 'react-navigation';
+import { Feather,FontAwesome } from '@expo/vector-icons';
+// screens
+import Home from './src/screens/Home';
+import Complete from './src/screens/Complete';
+import CreateScreen from './src/screens/CreateScreen';
+import TodoScreen from './src/screens/TodoScreen';
+import EditScreen from './src/screens/EditScreen';
 
-export default function App() {
+import {Provider} from 'react-redux';
+import { createStore} from 'redux';
+import ListReducer from './src/reducers/ListReducer';
+import { setNavigator } from './src/navigation/navigationRef';
+
+const tabBarOptions = {
+  showLabel: false,
+  activeTintColor: '#9381ff',
+  style: {
+    height: '10%',
+  },
+};
+
+const store = createStore(ListReducer);
+const switchNavigator = createMaterialBottomTabNavigator({
+    Homepage:{ 
+      screen:createStackNavigator({
+        Home,
+        CreateScreen,
+        TodoScreen,
+        EditScreen
+      }),
+      navigationOptions:{  
+        tabBarLabel:'Home',  
+        tabBarIcon: ({color, size}) => (
+          <FontAwesome name="list-alt" size={24} color={color} />
+        )  
+      }
+    },
+    Complete: {
+      screen:Complete,
+      navigationOptions:{  
+        tabBarLabel:'Complete',  
+        tabBarIcon: ({color, size}) => (
+          <Feather name="check-square" size={24} color={color} />
+        )  
+      }  
+    },
+  },
+    {  
+      initialRouteName: "Homepage",  
+      activeColor: '#f0edf6',  
+      inactiveColor: '#226557',  
+      barStyle: { backgroundColor: '#3BAD87' },  
+    }
+);
+
+const App  = createAppContainer(switchNavigator);
+
+export default () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={store}>
+      <App ref={(navigator) => {setNavigator(navigator)}} />
+    </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
