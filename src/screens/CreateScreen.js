@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import {View, Text, StyleSheet, TextInput, Button} from 'react-native';
 import DatePicker from 'react-native-datepicker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { connect } from 'react-redux';
 import { navigate } from '../navigation/navigationRef';
+
 const CreateScreen = (props) => {
 
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [isdone, setisdone] = useState(false);
-    const [date,setDate] = useState('04-06-2021');
+    const [date,setDate] = useState(null);
 
     return(
         
@@ -24,8 +26,8 @@ const CreateScreen = (props) => {
                 mode="date" // The enum of date, datetime and time
                 placeholder="select date"
                 format="DD-MM-YYYY"
-                minDate="01-01-2016"
-                maxDate="01-01-2019"
+                minDate="01-01-2001"
+                maxDate="01-01-2031"
                 confirmBtnText="Confirm"
                 cancelBtnText="Cancel"
                 customStyles={{
@@ -39,9 +41,7 @@ const CreateScreen = (props) => {
                     marginLeft: 36,
                     },
                 }}
-                onDateChange={(date) => {
-                    setDate(date);
-                }}
+                onDateChange={date => setDate(date)}
             />
             <Button
                 title="submit"

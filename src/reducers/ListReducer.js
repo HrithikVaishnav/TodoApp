@@ -14,8 +14,6 @@ const ListReducer = (state = InitialState,action) => {
 
     switch(action.type){
         case 'addTodo':
-            console.log(state);
-            console.log(action.payload)
             return {...state, 
                 Todo:[
                     ...state.Todo,
@@ -37,6 +35,7 @@ const ListReducer = (state = InitialState,action) => {
         }
 
         case 'deleteTodo':
+            console.log(action.payload)
             return {...state,
                 Todo:state.Todo.filter((item) => item.id !== action.payload)
         }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {View, Text, StyleSheet, TextInput, Button} from 'react-native';
 import DatePicker from 'react-native-datepicker';
-
+import DateTimePicker from '@react-native-community/datetimepicker';
 const Todoform = (props) => {
 
     const id = props.TodoItem.id;
@@ -24,8 +24,8 @@ const Todoform = (props) => {
                 mode="date" // The enum of date, datetime and time
                 placeholder="select date"
                 format="DD-MM-YYYY"
-                minDate="01-01-2016"
-                maxDate="01-01-2019"
+                minDate="01-01-2001"
+                maxDate="01-01-2031"
                 confirmBtnText="Confirm"
                 cancelBtnText="Cancel"
                 customStyles={{
